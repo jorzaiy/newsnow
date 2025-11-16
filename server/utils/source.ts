@@ -1,6 +1,7 @@
 import process from "node:process"
 import type { AllSourceID } from "@shared/types"
 import defu from "defu"
+import { fastFetch } from "./fetch"
 import type { RSSHubOption, RSSHubInfo as RSSHubResponse, SourceGetter, SourceOption } from "#/types"
 
 type R = Partial<Record<AllSourceID, SourceGetter>>
@@ -25,7 +26,6 @@ export function defineRSSSource(url: string, option?: SourceOption): SourceGette
 
 export function defineRSSHubSource(route: string, RSSHubOptions?: RSSHubOption, sourceOption?: SourceOption): SourceGetter {
   return async () => {
-    // "https://rsshub.pseudoyu.com"
     const RSSHubBase = "https://rsshub.rssforever.com"
     const url = new URL(route, RSSHubBase)
     url.searchParams.set("format", "json")
@@ -36,7 +36,14 @@ export function defineRSSHubSource(route: string, RSSHubOptions?: RSSHubOption, 
     Object.entries(RSSHubOptions).forEach(([key, value]) => {
       url.searchParams.set(key, value.toString())
     })
-    const data: RSSHubResponse = await myFetch(url)
+
+    console.log(`Fetching RSSHub data from: ${url}`)
+    const data: RSSHubResponse = await fastFetch(url)
+
+    if (!data?.items?.length) {
+      throw new Error("No items found in RSSHub response")
+    }
+
     return data.items.map(item => ({
       title: item.title,
       url: item.url,
