@@ -1,7 +1,6 @@
-// Use RSSHub to bypass Cloudflare protection on linux.do
-// RSSHub provides a proxy that can fetch RSS feeds even when the original site blocks direct access
-const hot = defineRSSHubSource("/linuxdo/hot")
-const latest = defineRSSHubSource("/linuxdo/latest")
+// Direct RSS feeds from linux.do - now accessible with proper headers
+const hot = defineRSSSource("https://linux.do/hot.rss")
+const latest = defineRSSSource("https://linux.do/latest.rss")
 
 export default defineSource({
   "linuxdo": latest,
