@@ -414,6 +414,57 @@
     "color": "blue",
     "interval": 600000
   },
+  "linuxdo": {
+    "redirect": "linuxdo-latest",
+    "name": "LINUX DO",
+    "column": "tech",
+    "home": "https://linux.do/latest",
+    "color": "slate",
+    "interval": 600000,
+    "title": "最新"
+  },
+  "linuxdo-latest": {
+    "name": "LINUX DO",
+    "column": "tech",
+    "home": "https://linux.do/latest",
+    "color": "slate",
+    "interval": 600000,
+    "title": "最新"
+  },
+  "linuxdo-hot": {
+    "name": "LINUX DO",
+    "type": "hottest",
+    "column": "tech",
+    "home": "https://linux.do/hot",
+    "color": "slate",
+    "interval": 1800000,
+    "title": "今日最热"
+  },
+  "nodeseek": {
+    "redirect": "nodeseek-latest",
+    "name": "NodeSeek",
+    "column": "tech",
+    "home": "https://www.nodeseek.com/",
+    "color": "blue",
+    "interval": 600000,
+    "title": "最新"
+  },
+  "nodeseek-latest": {
+    "name": "NodeSeek",
+    "column": "tech",
+    "home": "https://www.nodeseek.com/",
+    "color": "blue",
+    "interval": 600000,
+    "title": "最新"
+  },
+  "nodeseek-tech": {
+    "name": "NodeSeek",
+    "column": "tech",
+    "home": "https://www.nodeseek.com/categories/tech",
+    "color": "blue",
+    "interval": 600000,
+    "title": "技术"
+  },
   "nowcoder": {
     "name": "牛客",
     "type": "hottest",

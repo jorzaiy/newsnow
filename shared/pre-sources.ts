@@ -336,7 +336,6 @@ export const originSources = {
     column: "tech",
     color: "slate",
     home: "https://linux.do/",
-    disable: true,
     sub: {
       latest: {
         title: "最新",
@@ -347,6 +346,23 @@ export const originSources = {
         type: "hottest",
         interval: Time.Common,
         home: "https://linux.do/hot",
+      },
+    },
+  },
+  "nodeseek": {
+    name: "NodeSeek",
+    column: "tech",
+    color: "blue",
+    home: "https://www.nodeseek.com/",
+    sub: {
+      latest: {
+        title: "最新",
+        home: "https://www.nodeseek.com/",
+      },
+      tech: {
+        title: "技术",
+        column: "tech",
+        home: "https://www.nodeseek.com/categories/tech",
       },
     },
   },
