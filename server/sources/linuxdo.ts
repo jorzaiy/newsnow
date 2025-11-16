@@ -1,6 +1,6 @@
-// Direct RSS feeds from linux.do - now accessible with proper headers
-const hot = defineRSSSource("https://linux.do/hot.rss")
-const latest = defineRSSSource("https://linux.do/latest.rss")
+// RSSHub-proxied feeds from linux.do to bypass Cloudflare protection
+const hot = defineRSSHubSource("linuxdo/hot")
+const latest = defineRSSHubSource("linuxdo/latest")
 
 export default defineSource({
   "linuxdo": latest,
