@@ -109,6 +109,10 @@ Refer to `shared/sources` and `server/sources` directories. The project provides
 
 For detailed instructions on how to add new sources, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
+### Mobile API Documentation
+
+For integration with mobile clients like Brief Harmony, see [docs/mobile-api.md](docs/mobile-api.md) for detailed API endpoint documentation, including request/response formats, available sources, and integration guidelines.
+
 ## Roadmap
 
 - Add **multi-language support** (English, Chinese, more to come).
