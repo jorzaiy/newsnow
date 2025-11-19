@@ -64,38 +64,47 @@ const getLinuxDoSource = (type: "latest" | "top" | "hot") => {
     const ua = process.env.LINUXDO_UA || "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
 
     if (!cookie) {
-      throw new Error("LINUXDO_COOKIE is not set in .env.server")
+      console.warn("[LinuxDo] LINUXDO_COOKIE is not set, skipping LinuxDo source")
+      return []
     }
 
     const url = type === "hot" ? "https://linux.do/top.json" : "https://linux.do/latest.json"
 
-    const response: LinuxDoResponse = await myFetch(url, {
-      headers: {
-        Cookie: cookie,
-        "User-Agent": ua,
-        "Accept": "application/json, text/plain, */*",
-        "Referer": "https://linux.do/",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Sec-Fetch-Dest": "empty",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "same-origin",
-      },
-    })
+    try {
+      console.log(`[LinuxDo] Fetching ${url}`)
+      const response: LinuxDoResponse = await myFetch(url, {
+        headers: {
+          Cookie: cookie,
+          "User-Agent": ua,
+          "Accept": "application/json, text/plain, */*",
+          "Referer": "https://linux.do/",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Sec-Fetch-Dest": "empty",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Site": "same-origin",
+        },
+      })
 
-    if (!response?.topic_list?.topics) {
-      throw new Error("Failed to fetch LinuxDo topics")
+      if (!response?.topic_list?.topics) {
+        console.error("[LinuxDo] Invalid response structure")
+        return []
+      }
+
+      console.log(`[LinuxDo] Successfully fetched ${response.topic_list.topics.length} topics`)
+      return response.topic_list.topics.map((topic): NewsItem => ({
+        id: topic.id.toString(),
+        title: topic.title,
+        url: `https://linux.do/t/${topic.slug}/${topic.id}`,
+        pubDate: topic.created_at,
+        extra: {
+          info: `💬 ${topic.reply_count}  👁️ ${topic.views}`,
+          hover: topic.tags.join(", "),
+        },
+      }))
+    } catch (error) {
+      console.error("[LinuxDo] Failed to fetch topics:", error)
+      return []
     }
-
-    return response.topic_list.topics.map((topic): NewsItem => ({
-      id: topic.id.toString(),
-      title: topic.title,
-      url: `https://linux.do/t/${topic.slug}/${topic.id}`,
-      pubDate: topic.created_at,
-      extra: {
-        info: `💬 ${topic.reply_count}  👁️ ${topic.views}`,
-        hover: topic.tags.join(", "),
-      },
-    }))
   })
 }
 
